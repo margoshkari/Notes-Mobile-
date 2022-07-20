@@ -9,7 +9,9 @@ export const gStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "flex-end",
-    margin: "5%",
+    position: "absolute",
+    right: "5%",
+    bottom: "5%",
   },
   input: {
     color: "#fff",
@@ -17,5 +19,14 @@ export const gStyles = StyleSheet.create({
     width: "80%",
     marginLeft: "10%",
     marginRight: "10%",
+  },
+  note: {
+    width: "90%",
+    borderRadius: 15,
+    backgroundColor: "#363636",
+    height: 70,
+    marginLeft: "5%",
+    marginBottom: "3%",
+    paddingLeft: "3%",
   },
 });

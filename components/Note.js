@@ -4,20 +4,23 @@ import { gStyles } from "../style/styles";
 import { Formik } from "formik";
 
 export default function Note({ route, navigation }) {
+  const submitFunc = (values) => {
+    if (values.text != "") {
+      route.params.addNote(values);
+      navigation.navigate("Main", values);
+    }
+  };
   return (
     <View
       style={{
         height: "100%",
-        backgroundColor: "#2e2e2e",
+        backgroundColor: "#1f1f1f",
       }}
     >
       <Formik
         onSubmit={(values, action) => {
-          //addNote(values);
-          // console.log("values");
-          route.params.addNote(values);
-          action.resetForm();
-          navigation.navigate("Main", values);
+          submitFunc(values);
+          //action.resetForm();
         }}
         initialValues={{ title: "", text: "" }}
       >

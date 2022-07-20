@@ -14,7 +14,7 @@ export default function Navigate() {
         screenOptions={{
           title: "",
           headerStyle: {
-            backgroundColor: "#2e2e2e",
+            backgroundColor: "#1f1f1f",
           },
           headerTintColor: "#fff",
           headerShadowVisible: false,
