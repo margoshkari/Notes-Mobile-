@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, TouchableOpacity, FlatList, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  Text,
+  Pressable,
+} from "react-native";
 import { gStyles } from "../style/styles";
 import { Ionicons } from "@expo/vector-icons";
 import { LogBox } from "react-native";
@@ -12,6 +18,7 @@ export default function Main({ navigation }) {
     ]);
   });
   const [notes, setNotes] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const addNote = (data) => {
     setNotes((list) => {
@@ -32,43 +39,65 @@ export default function Main({ navigation }) {
   };
 
   const limitstr = (text) => {
-    var newtext = text.substr(0, 30);
-    if (text.length > 30) {
-      newtext += "...";
+    if (text != undefined) {
+      var newtext = text.substr(0, 30);
+      if (text.length > 30) {
+        newtext += "...";
+      }
+      return newtext;
     }
-    return newtext;
+  };
+
+  const longPress = (item) => {
+    setSelectedItems((list) => {
+      return [...list, item.key];
+    });
+  };
+
+  const deselect = () => {
+    setSelectedItems([]);
   };
 
   return (
     <View
       style={{
-        justifyContent: "flex-end",
         height: "100%",
         backgroundColor: "#1f1f1f",
       }}
     >
       {/* Вывод всех заметок */}
-      <FlatList
-        data={notes}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={gStyles.note}
-            onPress={() => {
-              navigation.navigate("Note", {
-                item: item,
-                updateNote: updateNote,
-              });
-            }}
-          >
-            <Text style={{ color: "white", fontSize: 20 }}>
-              {limitstr(item.title)}
-            </Text>
-            <Text style={{ color: "#9e9e9e", fontSize: 15 }}>
-              {limitstr(item.text)}
-            </Text>
-          </TouchableOpacity>
-        )}
-      />
+      <Pressable style={{ height: "100%", width: "100%" }} onPress={deselect}>
+        <FlatList
+          data={notes}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={gStyles.note}
+              onPress={() => {
+                navigation.navigate("Note", {
+                  item: item,
+                  updateNote: updateNote,
+                });
+              }}
+              onLongPress={() => {
+                longPress(item);
+              }}
+            >
+              <View style={{ paddingLeft: "3%" }}>
+                <Text style={{ color: "white", fontSize: 20 }}>
+                  {limitstr(item.title)}
+                </Text>
+                <Text style={{ color: "#9e9e9e", fontSize: 15 }}>
+                  {limitstr(item.text)}
+                </Text>
+              </View>
+
+              {selectedItems.includes(item.key) && (
+                <View style={gStyles.overlay}></View>
+              )}
+            </TouchableOpacity>
+          )}
+        />
+      </Pressable>
 
       <TouchableOpacity
         style={gStyles.addBtn}

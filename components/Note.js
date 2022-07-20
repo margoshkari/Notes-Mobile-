@@ -5,7 +5,10 @@ import { Formik } from "formik";
 
 export default function Note({ route, navigation }) {
   const submitFunc = (values) => {
-    if (values.text != undefined && values.text != "") {
+    values.text = values.text != undefined ? values.text : "";
+    values.title = values.title != undefined ? values.title : "";
+
+    if (values.title != "" || values.text != "") {
       if (route.params.addNote != undefined) {
         values.key = Math.random().toString();
         route.params.addNote(values);

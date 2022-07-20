@@ -27,6 +27,14 @@ export const gStyles = StyleSheet.create({
     height: 70,
     marginLeft: "5%",
     marginBottom: "3%",
-    paddingLeft: "3%",
+  },
+  overlay: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(12, 34, 56, 0.5)",
+    top: 0,
+    left: 0,
+    position: "absolute",
+    borderRadius: 15,
   },
 });
