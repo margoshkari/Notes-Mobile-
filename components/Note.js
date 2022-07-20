@@ -5,9 +5,14 @@ import { Formik } from "formik";
 
 export default function Note({ route, navigation }) {
   const submitFunc = (values) => {
-    if (values.text != "") {
-      route.params.addNote(values);
-      navigation.navigate("Main", values);
+    if (values.text != undefined && values.text != "") {
+      if (route.params.addNote != undefined) {
+        values.key = Math.random().toString();
+        route.params.addNote(values);
+      } else if (route.params.updateNote != undefined) {
+        route.params.updateNote(values);
+      }
+      navigation.navigate("Main");
     }
   };
   return (
@@ -22,7 +27,11 @@ export default function Note({ route, navigation }) {
           submitFunc(values);
           //action.resetForm();
         }}
-        initialValues={{ title: "", text: "" }}
+        initialValues={{
+          title: route.params.item?.title,
+          text: route.params.item?.text,
+          key: route.params.item?.key,
+        }}
       >
         {(props) => (
           <View>

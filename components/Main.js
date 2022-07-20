@@ -13,12 +13,22 @@ export default function Main({ navigation }) {
   });
   const [notes, setNotes] = useState([]);
 
-  const addNote = (article) => {
-    article.key = Math.random().toString();
+  const addNote = (data) => {
     setNotes((list) => {
-      console.log(article);
-      return [article, ...list];
+      console.log(data);
+      return [data, ...list];
     });
+  };
+
+  const updateNote = (data) => {
+    var index = notes.findIndex((elem) => elem.key == data.key);
+    if (index >= 0) {
+      notes[index].title = data.title;
+      notes[index].text = data.text;
+      setNotes((list) => {
+        return [...list];
+      });
+    }
   };
 
   const limitstr = (text) => {
@@ -41,7 +51,15 @@ export default function Main({ navigation }) {
       <FlatList
         data={notes}
         renderItem={({ item }) => (
-          <TouchableOpacity style={gStyles.note}>
+          <TouchableOpacity
+            style={gStyles.note}
+            onPress={() => {
+              navigation.navigate("Note", {
+                item: item,
+                updateNote: updateNote,
+              });
+            }}
+          >
             <Text style={{ color: "white", fontSize: 20 }}>
               {limitstr(item.title)}
             </Text>
