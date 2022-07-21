@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, TextInput, Button } from "react-native";
 import { gStyles } from "../style/styles";
 import { Formik } from "formik";
+import { Component } from "react";
 
 export default function Note({ route, navigation }) {
+  const [confirm, setConfirm] = useState(false);
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
+
   const submitFunc = (values) => {
     values.text = values.text != undefined ? values.text : "";
     values.title = values.title != undefined ? values.title : "";
@@ -18,6 +23,15 @@ export default function Note({ route, navigation }) {
       navigation.navigate("Main");
     }
   };
+  useEffect(() => {
+    console.log(title);
+    console.log(text);
+    if (title != "" || text != "") {
+      setConfirm(true);
+    } else {
+      setConfirm(false);
+    }
+  }, [title, text]);
   return (
     <View
       style={{
@@ -44,7 +58,10 @@ export default function Note({ route, navigation }) {
               value={props.values.title}
               multiline
               style={[gStyles.input, { fontSize: 25, marginBottom: "5%" }]}
-              onChangeText={props.handleChange("title")}
+              onChangeText={(data) => {
+                setTitle(data);
+                props.handleChange("title");
+              }}
             ></TextInput>
             <TextInput
               placeholder="Start typing"
@@ -52,9 +69,12 @@ export default function Note({ route, navigation }) {
               value={props.values.text}
               multiline
               style={gStyles.input}
-              onChangeText={props.handleChange("text")}
+              onChangeText={(data) => {
+                setText(data);
+                props.handleChange("text");
+              }}
             ></TextInput>
-            <Button title="Add" onPress={props.handleSubmit} />
+            {confirm && <Button title="Add" onPress={props.handleSubmit} />}
           </View>
         )}
       </Formik>

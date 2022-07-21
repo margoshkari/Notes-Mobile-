@@ -19,10 +19,10 @@ export default function Main({ navigation }) {
   });
   const [notes, setNotes] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [isSelected, setSelect] = useState(false);
 
   const addNote = (data) => {
     setNotes((list) => {
-      console.log(data);
       return [data, ...list];
     });
   };
@@ -48,14 +48,40 @@ export default function Main({ navigation }) {
     }
   };
 
-  const longPress = (item) => {
+  const selectItems = (item) => {
+    setSelect(true);
     setSelectedItems((list) => {
       return [...list, item.key];
     });
   };
 
-  const deselect = () => {
+  const deselectItems = () => {
+    setSelect(false);
     setSelectedItems([]);
+  };
+
+  const deselectOneItem = (item) => {
+    setSelectedItems((list) => {
+      return list.filter((key) => key != item.key);
+    });
+    if (selectedItems.length <= 1) {
+      setSelect(false);
+    }
+  };
+
+  const pressNote = (item) => {
+    if (!isSelected) {
+      navigation.navigate("Note", {
+        item: item,
+        updateNote: updateNote,
+      });
+    } else {
+      if (selectedItems.includes(item.key)) {
+        deselectOneItem(item);
+      } else {
+        selectItems(item);
+      }
+    }
   };
 
   return (
@@ -66,20 +92,20 @@ export default function Main({ navigation }) {
       }}
     >
       {/* Вывод всех заметок */}
-      <Pressable style={{ height: "100%", width: "100%" }} onPress={deselect}>
+      <Pressable
+        style={{ height: "100%", width: "100%" }}
+        onPress={deselectItems}
+      >
         <FlatList
           data={notes}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={gStyles.note}
               onPress={() => {
-                navigation.navigate("Note", {
-                  item: item,
-                  updateNote: updateNote,
-                });
+                pressNote(item);
               }}
               onLongPress={() => {
-                longPress(item);
+                selectItems(item);
               }}
             >
               <View style={{ paddingLeft: "3%" }}>
