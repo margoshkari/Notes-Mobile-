@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { gStyles } from "../style/styles";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { LogBox } from "react-native";
 import { useEffect } from "react";
 
@@ -84,6 +85,14 @@ export default function Main({ navigation }) {
     }
   };
 
+  const deleteNote = () => {
+    var tmpArray = notes.filter(function (item) {
+      return !selectedItems.includes(item.key);
+    });
+    setNotes(tmpArray);
+    deselectItems();
+  };
+
   return (
     <View
       style={{
@@ -115,6 +124,16 @@ export default function Main({ navigation }) {
         style={{ height: "100%", width: "100%" }}
         onPress={deselectItems}
       >
+        {isSelected && (
+          <TouchableOpacity onPress={deleteNote}>
+            <MaterialIcons
+              name="delete-outline"
+              size={30}
+              color="white"
+              style={{ marginLeft: "10%", marginBottom: "5%" }}
+            />
+          </TouchableOpacity>
+        )}
         <FlatList
           data={notes}
           renderItem={({ item }) => (
@@ -143,7 +162,6 @@ export default function Main({ navigation }) {
           )}
         />
       </Pressable>
-
       <TouchableOpacity
         style={gStyles.addBtn}
         onPress={() => {

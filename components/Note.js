@@ -19,7 +19,6 @@ export default function Note({ route, navigation }) {
   const submitFunc = () => {
     values.title = title;
     values.text = text;
-    console.log(values.title);
     if (
       (values.title != "" && values.title != undefined) ||
       (values.text != "" && values.text != undefined)

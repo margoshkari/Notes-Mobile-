@@ -31,7 +31,7 @@ export const gStyles = StyleSheet.create({
   overlay: {
     width: "100%",
     height: "100%",
-    backgroundColor: "rgba(12, 34, 56, 0.5)",
+    backgroundColor: "rgba(110, 110, 110, 0.5)",
     top: 0,
     left: 0,
     position: "absolute",
