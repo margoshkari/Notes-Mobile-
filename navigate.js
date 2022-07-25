@@ -12,12 +12,13 @@ export default function Navigate() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          title: "",
-          headerStyle: {
-            backgroundColor: "#1f1f1f",
-          },
-          headerTintColor: "#fff",
-          headerShadowVisible: false,
+          // title: "",
+          // headerStyle: {
+          //   backgroundColor: "green",
+          // },
+          // headerTintColor: "#fff",
+          // headerShadowVisible: false,
+          headerShown: false,
         }}
       >
         <Stack.Screen name="Main" component={Main} />

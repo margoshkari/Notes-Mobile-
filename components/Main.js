@@ -91,6 +91,25 @@ export default function Main({ navigation }) {
         backgroundColor: "#1f1f1f",
       }}
     >
+      {/* ---------------Navpanel----------------- */}
+      <View
+        style={{
+          height: "10%",
+          backgroundColor: "#1f1f1f",
+          justifyContent: "flex-end",
+        }}
+      >
+        <View
+          style={{
+            height: "80%",
+            backgroundColor: "#1f1f1f",
+            justifyContent: "center",
+            marginLeft: "5%",
+          }}
+        ></View>
+      </View>
+      {/* ---------------END----------------- */}
+
       {/* Вывод всех заметок */}
       <Pressable
         style={{ height: "100%", width: "100%" }}
